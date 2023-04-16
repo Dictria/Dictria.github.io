@@ -65,7 +65,7 @@ disqus_username: https://dictria.github.io/
 netease_comment: false
 
 # Analytics settings
-Baidu Analytics
+# Baidu Analytics
 ba_track_id: [08217c06cb547c390acb9c7a5b8f193b]
 
 # Google Analytics
