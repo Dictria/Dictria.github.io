@@ -10,9 +10,7 @@ tags:
   - OS
 ---
 
-can
-
-参考自Little Book of Semaphores
+> 参考自[Little Book of Semaphores](https://github.com/Dictria/Dictria.github.io/blob/main/_posts/OS/2023-04-16-semaphores.assets/Little%20Book%20Of%20Semaphores.pdf)
 
 # Classical
 
