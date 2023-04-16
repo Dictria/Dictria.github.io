@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "2021 BUAA OS Lab4 Challenge"
-subtitle: "Pthread"
+subtitle: "Pthread&POSIX信号量实现"
 date: 2021-06-30
 author: "Dictria"
 header-img: "img/header.jpg"
