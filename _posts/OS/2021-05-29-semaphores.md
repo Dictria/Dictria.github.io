@@ -317,7 +317,7 @@ while(true) {
 ```
 
 * the outline of the situation is as following
-  ![2023-04-16-semaphores.assets/dining-16816455388372.PNG](https://github.com/Dictria/Dictria.github.io/blob/main/_posts/OS/2021-05-29-semaphores.assets/dining.PNG?raw=true)
+  ![2023-04-16-semaphores.assets/dining-16816455388372.PNG](https://github.com/Dictria/Dictria.github.io/blob/main/_posts/OS/2023-04-16-semaphores.assets/dining.PNG?raw=true)
 
 1. Constraint
 

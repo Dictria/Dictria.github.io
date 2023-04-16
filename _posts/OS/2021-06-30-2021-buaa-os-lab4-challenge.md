@@ -342,7 +342,7 @@ int sys_sem_getvalue(int sysno, sem_t* sem, int* sval) {
 在这个函数中如果信号量的值大于等于0，则直接返回信号量的值，否则，遍历阻塞队列，计算有多少个线程挂起，返回挂起线程数量的负值。因此对于函数`sem_getvalue()`而言，如果取得非负值，则为信号量的值；而如果为负值，则该值的绝对值为挂起线程的数量。  
 &nbsp;
 总的调用关系如下图所示：   
-![信号量调用](2021-06-30-2021-buaa-os-lab4-challenge.assets/信号量调用-16816451785944.png) 
+![2021-06-30-2021-buaa-os-lab4-challenge.assets/信号量调用-16816451785944.png](https://github.com/Dictria/Dictria.github.io/blob/main/_posts/OS/2021-06-30-2021-buaa-os-lab4-challenge.assets/%E4%BF%A1%E5%8F%B7%E9%87%8F%E8%B0%83%E7%94%A8-16816451785944.png?raw=true) 
 在信号量实现中，`sem_*`函数只是简单地调用了`syscall_sem_*`函数，主要是为了满足POSIX标准中定义的函数接口。   
 
 ### 2.1 POSIX thread实现
@@ -433,7 +433,7 @@ int pthread_create(pthread_t* thread, const pthread_attr_t* attr,
 
 `pthread_create`函数应该是实验中，最难的一个部分。它的流程是，首先分配一个线程结构体，初始化它的状态，初始化线程信号量等工作。   
 其后是分配线程栈空间，首先说明一下在实现中的进程空间分布的问题，如下图所示：   
-![进程空间](2021-06-30-2021-buaa-os-lab4-challenge.assets/进程空间-16816451477451.png)  
+![2021-06-30-2021-buaa-os-lab4-challenge.assets/进程空间-16816451477451.png](https://github.com/Dictria/Dictria.github.io/blob/main/_posts/OS/2021-06-30-2021-buaa-os-lab4-challenge.assets/%E8%BF%9B%E7%A8%8B%E7%A9%BA%E9%97%B4-16816451477451.png?raw=true)  
 自UTOP向下依次分配线程栈，每个线程栈顶分别由4KB的`user exception stack`和`Invalid memory`空间。同时自顶向下线程id号依次增加，因此可以通过栈指针得到线程的id号。   
 $(UTOP - temp\_var\_addr) / PDMAP = pthread\_id$   
 反过来，也可以通过线程的id号得到它的栈的位置:   
@@ -453,7 +453,7 @@ void thread_main(void* arg0, void* arg1) {
 
 系统调用`syscall_pthread_alloc`衍生自`syscall_env_alloc`，主要区别在于`syscall_pthread_alloc`不执行`env_setup_vm`。同时它会将`thread_main`函数的地址设置为第一个参数(`a0`)，将`start_routine`需要的参数`arg`设置为第二个参数(`a1`)。栈地址设置为线程真实的栈地址而不是`UTOP`，设置新的线程`pgdir`和`pri`继承自创建它的线程。   
 
-2. `pthread_exit`   
+1. `pthread_exit`   
 
 ```c
 void pthread_exit(void* value_ptr) {
@@ -648,6 +648,6 @@ void umain()
 ## 5. 实验结果
 
 初步测试的结果如下所示：   
-![测试结果](2021-06-30-2021-buaa-os-lab4-challenge.assets/测试结果.PNG)  
+![2021-06-30-2021-buaa-os-lab4-challenge.assets/测试结果.PNG](https://github.com/Dictria/Dictria.github.io/blob/main/_posts/OS/2021-06-30-2021-buaa-os-lab4-challenge.assets/%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C.PNG?raw=true)  
 随后会对全部接口进行充分测试，考虑实现一个多线程排序来进行功能展示。   
 综上，pthread是在信号量的基础上进行的，由于pthread的引入，原本的单线程进程有的地方需要针对多线程进行修改，这时挑战性任务最大的难点，主要就是要充分考虑。   
