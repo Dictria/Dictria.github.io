@@ -177,7 +177,7 @@ void semaphore_destroy(int index);//回收信号量
 `sems = (struct Sem*)alloc(NSEM * sizeof(struct Sem), BY2PG, 1);`  
 之后在`mips_init()`函数中调用`semaphore_init()`，类似于`env_init()`，将分配好的`Sem`结构体数组`sems`组织成链表，方便以后的分配。   
 信号量初始化时的调用关系如下：   
-![信号量初始化](../../../BUAA/OS/exp/lab4-challenge/信号量初始化.png)
+![信号量初始化](/img/in-post/2021-06-30-2021-buaa-os-lab4-challenge.assets/信号量初始化.png)
 
 此时，所有的`struct Sem`已经组织成为链表，**信号量的id为相应结构体在`sems`数组中的下标**。所以合法的id为`[0, NSEM - 1]`   
 另外，因为一个进程控制块，要么在信号量挂起，要么在可执行队列，要么在空闲队列，因此在实现中，信号量下的等待队列复用了`struct Env`中的`env_link`。  
@@ -342,7 +342,7 @@ int sys_sem_getvalue(int sysno, sem_t* sem, int* sval) {
 在这个函数中如果信号量的值大于等于0，则直接返回信号量的值，否则，遍历阻塞队列，计算有多少个线程挂起，返回挂起线程数量的负值。因此对于函数`sem_getvalue()`而言，如果取得非负值，则为信号量的值；而如果为负值，则该值的绝对值为挂起线程的数量。  
 &nbsp;
 总的调用关系如下图所示：   
-![2021-06-30-2021-buaa-os-lab4-challenge.assets/信号量调用-16816451785944.png](https://github.com/Dictria/Dictria.github.io/blob/main/_posts/OS/2021-06-30-2021-buaa-os-lab4-challenge.assets/%E4%BF%A1%E5%8F%B7%E9%87%8F%E8%B0%83%E7%94%A8-16816451785944.png?raw=true) 
+![/img/in-post/2021-06-30-2021-buaa-os-lab4-challenge.assets/信号量调用.png](/img/in-post/2021-06-30-2021-buaa-os-lab4-challenge.assets/信号量调用.png) 
 在信号量实现中，`sem_*`函数只是简单地调用了`syscall_sem_*`函数，主要是为了满足POSIX标准中定义的函数接口。   
 
 ### 2.1 POSIX thread实现
@@ -433,7 +433,7 @@ int pthread_create(pthread_t* thread, const pthread_attr_t* attr,
 
 `pthread_create`函数应该是实验中，最难的一个部分。它的流程是，首先分配一个线程结构体，初始化它的状态，初始化线程信号量等工作。   
 其后是分配线程栈空间，首先说明一下在实现中的进程空间分布的问题，如下图所示：   
-![2021-06-30-2021-buaa-os-lab4-challenge.assets/进程空间-16816451477451.png](https://github.com/Dictria/Dictria.github.io/blob/main/_posts/OS/2021-06-30-2021-buaa-os-lab4-challenge.assets/%E8%BF%9B%E7%A8%8B%E7%A9%BA%E9%97%B4-16816451477451.png?raw=true)  
+![2021-06-30-2021-buaa-os-lab4-challenge.assets/进程空间-16816451477451.png](/img/in-post/2021-06-30-2021-buaa-os-lab4-challenge.assets/进程空间.png)  
 自UTOP向下依次分配线程栈，每个线程栈顶分别由4KB的`user exception stack`和`Invalid memory`空间。同时自顶向下线程id号依次增加，因此可以通过栈指针得到线程的id号。   
 $(UTOP - temp\_var\_addr) / PDMAP = pthread\_id$   
 反过来，也可以通过线程的id号得到它的栈的位置:   
@@ -648,6 +648,6 @@ void umain()
 ## 5. 实验结果
 
 初步测试的结果如下所示：   
-![2021-06-30-2021-buaa-os-lab4-challenge.assets/测试结果.PNG](https://github.com/Dictria/Dictria.github.io/blob/main/_posts/OS/2021-06-30-2021-buaa-os-lab4-challenge.assets/%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C.PNG?raw=true)  
+![2021-06-30-2021-buaa-os-lab4-challenge.assets/测试结果.PNG](/img/in-post/2021-06-30-2021-buaa-os-lab4-challenge.assets/测试结果.PNG)  
 随后会对全部接口进行充分测试，考虑实现一个多线程排序来进行功能展示。   
 综上，pthread是在信号量的基础上进行的，由于pthread的引入，原本的单线程进程有的地方需要针对多线程进行修改，这时挑战性任务最大的难点，主要就是要充分考虑。   
