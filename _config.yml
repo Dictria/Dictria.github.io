@@ -42,7 +42,8 @@ anchorjs: true # if you want to customize anchor. check out line:181 of `post.ht
 # from PR#40, to support local preview for Jekyll 3.0
 # make sure you have this gem installed
 # `$ gem install jekyll-paginate`
-plugins: [jekyll-paginate]
+plugins: [jekyll-paginate, jekyll-sitemap]
+sitemap: true
 
 # Markdown settings
 # replace redcarpet to kramdown,
@@ -58,8 +59,10 @@ kramdown:
       line_numbers: true
       start_line: 1
 
+# utterances
+utterances_comment: true
 # Disqus settings
-disqus_username: https://dictria.github.io/
+# disqus_username: https://dictria.github.io/
 
 # Netease settings
 netease_comment: false
@@ -82,7 +85,9 @@ featured-tags: true # whether or not using Feature-Tags
 featured-condition-size: 1 # A tag will be featured if the size of it is more than this condition value
 
 # Progressive Web Apps
-chrome-tab-theme-color: "#000000"
+# chrome-tab-theme-color: "#000000"
+light-tab-theme-color: "#FFFFFF"
+dark-tab-theme-color: "#000000"
 service-worker: true
 
 # MathJax rendering for layout:page (e.g. post preview)
